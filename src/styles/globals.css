@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-2xl font-medium;
+  }
+  button {
+    @apply block w-full btn btn-primary;
+  }
+
+  input {
+    @apply block w-full input input-bordered;
+  }
+}
