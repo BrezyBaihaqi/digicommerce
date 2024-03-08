@@ -9,8 +9,16 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Category {
+  ILUSTRARTION
+  FONTS
+  UIKIT
+  TEMPLATE
+  MOCKUPS
 }
 
 model User {
@@ -22,4 +30,61 @@ model User {
   password String
   createdAt DateTime @default(now())
   updateAt DateTime @updatedAt
+  product Product[]
+  comment Comment[]
+  order Order[]
+  review Review[]
+
+}
+
+model Product {
+  id String @id @default(cuid())
+  name String
+  slug String
+  description String
+  featureImage String
+  images String
+  price Int
+  category Category
+  authorId String
+  author User @relation(fields: [authorId], references: [id])
+  comment Comment[]
+  order Order[]
+
+  createdAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model Comment {
+  id String @id @default(cuid())
+  comment String
+  productId String
+  product Product @relation(fields: [productId], references: [id])
+  
+  authorId String
+  author User @relation(fields: [authorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model Order {
+  id String @id @default(cuid())
+  productId String
+  product Product @relation(fields: [productId], references: [id])
+  authorId String
+  author User @relation(fields: [authorId], references: [id])
+  review Review?
+}
+
+model Review {
+  id String @id @default(cuid())
+  review String
+  rating Int
+  authorId String
+  author User @relation(fields: [authorId], references: [id])
+
+  orderId String @unique
+  order Order @relation(fields: [orderId], references: [id])
+
 }
