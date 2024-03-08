@@ -1,5 +1,5 @@
 import { Register } from "@/components/auth/register";
 
 export default function Page() {
-  return <Register />;
+  return <div>Homepage Staging</div>;
 }
