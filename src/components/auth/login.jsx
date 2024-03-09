@@ -1,7 +1,10 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export const Login = () => {
+  const router = useRouter();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -27,7 +30,17 @@ export const Login = () => {
       body: JSON.stringify(loginData),
     });
 
-    const data = await res.json();
+    if (res.status === 401 || res.status === 404) {
+      const { errorMessage } = await res.json();
+      console.log(errorMessage);
+      toast.error(errorMessage);
+      return;
+    }
+
+    const { data, message } = await res.json();
+    localStorage.setItem("user", JSON.stringify(data));
+    toast.success(message);
+    router.push("/");
     console.log(data);
   }
 
