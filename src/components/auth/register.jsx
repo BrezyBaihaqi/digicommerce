@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export const Register = () => {
   const [registerData, setRegisterData] = useState({
@@ -31,7 +32,16 @@ export const Register = () => {
       body: JSON.stringify(registerData),
     });
 
-    const data = await res.json();
+    if (res.status === 500) {
+      const { errorMessage } = await res.json();
+      console.log(errorMessage);
+      toast.error(errorMessage);
+      return;
+    }
+
+    const { data, message } = await res.json();
+    toast.success(message);
+
     console.log(data);
   }
 

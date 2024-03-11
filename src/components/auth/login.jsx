@@ -1,4 +1,6 @@
 "use client";
+import { siteUrl } from "@/config/siteUrl";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -40,30 +42,42 @@ export const Login = () => {
     const { data, message } = await res.json();
     localStorage.setItem("user", JSON.stringify(data));
     toast.success(message);
-    router.push("/");
-    console.log(data);
+    // router.push("/");
+    // console.log(data);
+    window.location.replace(siteUrl);
   }
 
   return (
-    <main className="space-y-4">
-      <div className="text-center">
+    <main className="space-y-6">
+      <div className="font-medium tracking-tight text-base">Digicommerce.</div>
+      <div className="">
         <h1>Login</h1>
         <p>Welcome back!</p>
       </div>
-
-      <input
-        name="email"
-        type="email"
-        placeholder="email@domain.com"
-        onChange={handleChangeInput}
-      />
-      <input
-        name="password"
-        type="password"
-        placeholder="password"
-        onChange={handleChangeInput}
-      />
-      <button onClick={handleLogin}>Login</button>
+      <div className="space-y-3">
+        <input
+          name="email"
+          placeholder="email@domain.com"
+          onChange={handleChangeInput}
+        />
+        <input
+          name="password"
+          placeholder="password"
+          type="password"
+          onChange={handleChangeInput}
+        />
+        <button className="btn-md" onClick={handleLogin}>
+          Login
+        </button>
+      </div>
+      <div>
+        <div>
+          Don&apos;t have an account ?{" "}
+          <Link href="/register" className="link">
+            <span>Register</span>
+          </Link>
+        </div>
+      </div>
     </main>
   );
 };
