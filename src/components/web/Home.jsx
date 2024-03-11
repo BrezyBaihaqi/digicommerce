@@ -15,7 +15,7 @@ export const Home = () => {
           </h1>
           <h3>
             Join a growing family of 746,594 designers and makers from around
-            the world.
+            the world
           </h3>
         </div>
       </section>
